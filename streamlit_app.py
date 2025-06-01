@@ -3,9 +3,11 @@
 import streamlit as st
 import requests
 import json
+import os # <-- NEW: Import the os module
 
 # FastAPI backend URL
-FASTAPI_URL = "http://localhost:8000"
+# --- UPDATED: Read from environment variable, with a fallback for local development ---
+FASTAPI_URL = os.getenv("FASTAPI_BACKEND_URL", "http://localhost:8000")
 
 st.set_page_config(layout="centered", page_title="AI Multi-Format Classifier")
 
@@ -54,12 +56,14 @@ if classification_button:
         try:
             if uploaded_file:
                 files = {'file': (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
-                st.write(f"Sending file: {uploaded_file.name} ({uploaded_file.type})")
-                response = requests.post(f"{FASTAPI_URL}/classify/", files=files)
+                st.write(f"Sending file: {uploaded_file.name} ({uploaded_file.type}) to **{FASTAPI_URL}/**") # Added for debug
+                # --- UPDATED: POST to root path / ---
+                response = requests.post(f"{FASTAPI_URL}/", files=files)
             elif text_input:
                 data = {"text_input": text_input}
-                st.write("Sending text input...")
-                response = requests.post(f"{FASTAPI_URL}/classify/", data=data)
+                st.write(f"Sending text input to **{FASTAPI_URL}/**") # Added for debug
+                # --- UPDATED: POST to root path / ---
+                response = requests.post(f"{FASTAPI_URL}/", data=data)
 
             response.raise_for_status() # Raise an exception for HTTP errors
             response_data = response.json()
@@ -69,9 +73,14 @@ if classification_button:
             st.session_state.classification_result = response_data
 
         except requests.exceptions.ConnectionError:
-            st.error(f"Could not connect to FastAPI server at {FASTAPI_URL}. Is it running?")
+            st.error(f"Could not connect to FastAPI server at `{FASTAPI_URL}`. Please ensure the backend container (`fastapi_app`) is running and accessible.")
         except requests.exceptions.RequestException as e:
-            st.error(f"Error during classification: {e}. Response: {response.text if 'response' in locals() else 'No response'}")
+            st.error(f"Error during classification: {e}. Check the backend logs for details.")
+            if 'response' in locals() and response.text:
+                try:
+                    st.json(response.json()) # Try to show FastAPI's error response
+                except json.JSONDecodeError:
+                    st.code(response.text) # Show raw text if not JSON
 
 # --- Display results and Audit Trail after a successful classification ---
 if st.session_state.classification_result:
@@ -90,10 +99,16 @@ if st.session_state.classification_result:
         st.subheader("Audit Trail:")
         if st.button("View Full Audit Trace in Memory"):
             try:
+                # The /audit/{transaction_id} endpoint path remains the same
                 audit_response = requests.get(f"{FASTAPI_URL}/audit/{st.session_state.transaction_id}")
                 audit_response.raise_for_status()
                 st.json(audit_response.json())
             except requests.exceptions.ConnectionError:
-                st.error(f"Could not connect to FastAPI server at {FASTAPI_URL} to fetch audit. Is it running?")
+                st.error(f"Could not connect to FastAPI server at `{FASTAPI_URL}` to fetch audit. Is it running?")
             except requests.exceptions.RequestException as e:
-                st.error(f"Error fetching audit trace: {e}. Response: {audit_response.text if 'audit_response' in locals() else 'No response'}")
+                st.error(f"Error fetching audit trace: {e}. Check the backend logs.")
+                if 'audit_response' in locals() and audit_response.text:
+                    try:
+                        st.json(audit_response.json())
+                    except json.JSONDecodeError:
+                        st.code(audit_response.text)

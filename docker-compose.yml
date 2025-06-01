@@ -1,0 +1,49 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  # FastAPI Backend Service
+  fastapi_app:
+    build:
+      context: . # Build context is the current directory
+      dockerfile: Dockerfile.fastapi # Use the specific Dockerfile for FastAPI
+    ports:
+      - "8000:8000" # Map host port 8000 to container port 8000
+    environment:
+      # Pass the Gemini API Key from the host's environment or a .env file for docker-compose
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      # Redis connection details (must match the redis service name and port)
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0 # Or your desired Redis DB number
+    depends_on:
+      - redis # Ensure Redis starts before FastAPI
+    restart: always # Restart if the container stops
+
+  # Streamlit Frontend Service
+  streamlit_app:
+    build:
+      context: . # Build context is the current directory
+      dockerfile: Dockerfile.streamlit # Use the specific Dockerfile for Streamlit
+    ports:
+      - "8501:8501" # Map host port 8501 to container port 8501
+    depends_on:
+      - fastapi_app # Ensure FastAPI starts before Streamlit
+    restart: always # Restart if the container stops
+    # Streamlit might need to know the FastAPI backend's URL if they interact directly
+    # In a Docker Compose network, 'fastapi_app' is the hostname for the FastAPI service
+    environment:
+      FASTAPI_BACKEND_URL: http://fastapi_app:8000 
+
+
+  # Redis Database Service
+  redis:
+    image: redis:7-alpine # Use a lightweight Redis image
+    ports:
+      - "6379:6379" # Map host port 6379 to container port 6379
+    volumes:
+      - redis_data:/data # Persist Redis data to a named volume
+    restart: always # Restart if the container stops
+
+volumes:
+  redis_data: # Define the named volume for Redis data persistence

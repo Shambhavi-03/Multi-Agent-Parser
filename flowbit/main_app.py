@@ -9,6 +9,8 @@ from datetime import datetime
 import json
 import uuid
 
+from fastapi.middleware.cors import CORSMiddleware
+
 # Import core utilities and agents
 from .core import shared_memory
 from .core import llm_client 
@@ -19,6 +21,24 @@ from .agents import json_agent
 from .agents import pdf_agent # UNCOMMENT THIS LINE
 
 app = FastAPI()
+
+# --- NEW: Configure CORS middleware ---
+# This allows your Streamlit app (or any origin) to make requests
+origins = [
+    "http://localhost",
+    "http://localhost:8501", # Your Streamlit app's typical port
+    # You might need to add other origins if your Streamlit app runs elsewhere
+    # e.g., "http://your_streamlit_app_domain.com"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+# --- END NEW CORS CONFIG ---
 
 # --- Shared Memory Audit Endpoint ---
 @app.get("/audit/{transaction_id}")
@@ -32,7 +52,7 @@ async def audit_trace(transaction_id: str):
     return trace
 
 # --- Classifier Agent Endpoint ---
-@app.post("/classify/")
+@app.post("/")
 async def classify_input(
     file: Optional[UploadFile] = File(None),
     text_input: Optional[str] = Form(None)
