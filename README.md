@@ -34,8 +34,8 @@ Before you begin, ensure you have the following installed:
     Open your terminal or command prompt and clone the project:
 
     ```bash
-    git clone [https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git](https://github.com/Shambhavi-03/Multi-Agent-Parser.git)
-    cd YOUR_REPO_NAME # Navigate into your project directory
+    git clone https://github.com/Shambhavi-03/Multi-Agent-Parser.git
+    cd Multi-Agent-Parser
     ```
 
 2.  **Create a `.env` File:**
