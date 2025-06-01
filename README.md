@@ -1,81 +1,118 @@
-## Docker Setup (Recommended for Easy Deployment)
+# AI Multi-Format Classifier
 
-This project provides Dockerfiles and a `docker-compose.yml` to containerize the FastAPI backend, Streamlit frontend, and a Redis database. This is the easiest way to get the entire application running.
+## 🌟 Project Overview
+
+The AI Multi-Format Classifier is a robust application designed to automatically detect the format (e.g., Email, JSON, PDF) and classify the business intent of various inputs (files or text). It leverages a FastAPI backend for core logic and agent orchestration, a Streamlit frontend for a user-friendly interface, and Redis for maintaining an audit trail of transactions. The entire system is containerized using Docker Compose for easy setup and deployment.
+
+### Key Features:
+
+* **Multi-Format Input:** Accepts `.eml`, `.json`, `.pdf`, and plain text inputs.
+* **AI-Powered Classification:** Uses a Large Language Model (LLM) (e.g., Gemini) to determine input format and business intent.
+* **Agent-Based Processing:** Routes classified inputs to specialized agents (Email, JSON, PDF) for further extraction and processing.
+* **Action Routing:** Triggers simulated external actions (e.g., CRM escalation, risk alerts) based on classification and extracted data.
+* **Audit Trail:** Maintains a comprehensive audit log of each transaction in Redis, accessible via a dedicated API endpoint.
+* **User-Friendly Interface:** A Streamlit web application provides a simple way to upload files or enter text and view results.
+* **Containerized Deployment:** Uses Docker Compose for isolated and reproducible development and deployment environments.
+
+## 🚀 Getting Started
+
+Follow these steps to get the AI Multi-Format Classifier up and running on your local machine.
 
 ### Prerequisites
 
-* **Docker Desktop:** Ensure Docker Desktop (or Docker Engine on Linux) is installed and running.
-* **Google Gemini API Key:** You still need to obtain a `GEMINI_API_KEY` from [Google AI Studio](https://aistudio.google.com/).
+Before you begin, ensure you have the following installed:
 
-### Steps
+* **Git:** For cloning the repository.
+    * [Download Git](https://git-scm.com/downloads)
+* **Docker Desktop** (for Windows/macOS) or **Docker Engine & Compose** (for Linux): Essential for running the containerized services.
+    * [Install Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-1.  **Clone the repository:**
+### ⚙️ Setup Instructions
+
+1.  **Clone the Repository:**
+
+    Open your terminal or command prompt and clone the project:
+
     ```bash
-    git clone [https://github.com/Shambhavi-03/Multi-Agent-Parser.git](https://github.com/Shambhavi-03/Multi-Agent-Parser.git)
-    cd Multi-Agent-Parser
+    git clone [https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git)
+    cd YOUR_REPO_NAME # Navigate into your project directory
     ```
+    (Remember to replace `YOUR_GITHUB_USERNAME` and `YOUR_REPO_NAME` with your actual GitHub details.)
 
-2.  **Create your `.env` file:**
-    Create a file named `.env` in the root directory of the project (at the same level as `docker-compose.yml`).
-    Add your Gemini API Key and optionally Redis connection details:
+2.  **Create a `.env` File:**
+
+    This project uses environment variables for sensitive information, particularly your LLM API key. Create a file named `.env` in the **root directory of your project** (the same directory as `docker-compose.yml`).
+
+    Add your Gemini API Key to this file:
+
     ```
-    GEMINI_API_KEY="YOUR_ACTUAL_GEMINI_API_KEY_HERE"
-    # Optional: If you need to specify different Redis settings for Docker Compose
-    # REDIS_HOST=redis
-    # REDIS_PORT=6379
-    # REDIS_DB=0
+    # .env
+    GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
     ```
-    **DO NOT commit your `.env` file to Git!** Ensure `.env` is in your `.gitignore`.
+    Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual key obtained from Google AI Studio.
+    **Never commit your `.env` file to Git! It's already included in the `.gitignore` for security.**
 
 3.  **Build and Run with Docker Compose:**
-    From the project's root directory, run:
+
+    From the root directory of your project (where `docker-compose.yml` is located), execute the following command:
+
     ```bash
     docker-compose up --build -d
     ```
-    * `--build`: This forces Docker Compose to rebuild the images, ensuring any code changes are picked up.
-    * `-d`: This runs the containers in detached mode (in the background).
+    * `docker-compose up`: Starts all services defined in `docker-compose.yml`.
+    * `--build`: Forces Docker to rebuild the images for `fastapi_app` and `streamlit_app`. This is crucial when you make code changes.
+    * `-d`: Runs the containers in detached mode (in the background).
 
-4.  **Access the Application:**
-    Once the containers are up:
-    * **FastAPI Backend (API Docs):** Access your API documentation at `http://localhost:8000/docs`
-    * **Streamlit Frontend (UI):** Access the user interface at `http://localhost:8501`
+    This command will:
+    * Pull the `redis` Docker image.
+    * Build the `fastapi_app` Docker image using `Dockerfile.fastapi`.
+    * Build the `streamlit_app` Docker image using `Dockerfile.streamlit`.
+    * Create a Docker network for the services to communicate.
+    * Start Redis, then FastAPI, then Streamlit (respecting `depends_on`).
 
-### Useful Docker Compose Commands
+4.  **Access the Applications:**
 
-* **Stop containers:** `docker-compose down`
-* **Stop and remove containers, networks, and volumes:** `docker-compose down --volumes` (use this if you want to clear Redis data)
-* **View logs:** `docker-compose logs -f` (use `-f` to follow logs live, add service name like `fastapi_app` to see specific service logs)
-* **List running containers:** `docker-compose ps`
+    Once the containers are running (it might take a minute or two for the first build), you can access the applications:
 
-uvicorn flowbit.main_app:app --reload --port 8000
+    * **Streamlit Frontend (User Interface):**
+        Open your web browser and navigate to:
+        `http://localhost:8501`
 
-streamlit run streamlit_app.py
+    * **FastAPI Documentation (Swagger UI):**
+        Open your web browser and navigate to:
+        `http://localhost:8000/docs`
 
-.
-├── your_project_name/
-│   ├── __init__.py
-│   │
-│   ├── agents/
-│   │   ├── __init__.py
-│   │   ├── classifier_agent.py   # Code for the Classifier Agent logic
-│   │   ├── email_agent.py        # Code for the Email Agent logic
-│   │   ├── json_agent.py         # Code for the JSON Agent logic
-│   │   └── pdf_agent.py          # Code for the PDF Agent logic
-│   │
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── shared_memory.py      # Redis client, read/write functions
-│   │   ├── llm_client.py         # Ollama/Gemini client, prompt handling, classify_with_llm/ollama
-│   │   └── action_router.py      # Logic for routing to simulated CRM/Risk Alert
-│   │
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── schemas.py            # Pydantic models, JSON schemas for validation
-│   │
-│   └── main_app.py               # FastAPI application, main entry point, routes
-│
-├── streamlit_app.py              # Your Streamlit UI application
-├── requirements.txt              # All Python dependencies
-├── .env                          # Environment variables (API keys, etc.)
-├── README.md                     # Project description and setup instructions
-└── docker-compose.yml            # (Optional) For containerizing FastAPI, Redis, Ollama
+    * **FastAPI Backend Root (API Endpoint):**
+        The main classification endpoint is now at the root path (`/`) and expects a `POST` request. You can test this via the Streamlit UI, the Swagger UI (`/docs`), or a tool like `curl` or Postman.
+        Example `curl` command for text input:
+        ```bash
+        curl -X POST "http://localhost:8000/" \
+             -H "Content-Type: application/x-www-form-urlencoded" \
+             -d "text_input=This is a customer inquiry about a refund."
+        ```
+
+### 🛑 Stopping the Applications
+
+To stop and remove the running Docker containers (but keep the images and Redis data volume):
+
+```bash
+docker-compose down
+```
+To stop and remove containers, associated Docker images, and all volumes (for a completely clean slate, useful for troubleshooting or starting fresh):
+
+```bash
+docker-compose down --volumes --rmi all
+```
+
+### 🤝 Contributing
+
+We welcome contributions to this project! If you have suggestions for improvements, new features, or find any bugs, please feel free to:
+
+*   Open an issue on GitHub.
+    
+*   Submit a pull request.
+    
+
+### 📄 License
+
+This project is licensed under the MIT License. You can find the full license text in the LICENSE file in the repository.
