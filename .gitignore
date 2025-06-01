@@ -1,0 +1,7 @@
+# Environment variables (CRUCIAL for API keys)
+.env
+
+# Python bytecode and temporary files
+__pycache__/
+*.pyc
+*.pyd
