@@ -44,12 +44,20 @@ Before you begin, ensure you have the following installed:
 
     This project uses environment variables for sensitive information, particularly your LLM API key. Create a file named `.env` in the **root directory of your project** (the same directory as `docker-compose.yml`).
 
-    Add your Gemini API Key to this file:
+    Add your Gemini API Key:
 
-    ```
-    # .env
-    GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
-    ```
+     * **On Linux/macOS (Bash/Zsh):**
+        ```bash
+        export GEMINI_API_KEY="your_actual_gemini_api_key"
+        ```
+    * **On Windows (Command Prompt):**
+        ```cmd
+        set GEMINI_API_KEY="your_actual_gemini_api_key"
+        ```
+    * **On Windows (PowerShell):**
+        ```powershell
+        $env:GEMINI_API_KEY="your_actual_gemini_api_key"
+        ```
     Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual key obtained from Google AI Studio.
 
 3.  **Build and Run with Docker Compose:**
