@@ -34,10 +34,9 @@ Before you begin, ensure you have the following installed:
     Open your terminal or command prompt and clone the project:
 
     ```bash
-    git clone [https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git)
+    git clone [https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git](https://github.com/Shambhavi-03/Multi-Agent-Parser.git)
     cd YOUR_REPO_NAME # Navigate into your project directory
     ```
-    (Remember to replace `YOUR_GITHUB_USERNAME` and `YOUR_REPO_NAME` with your actual GitHub details.)
 
 2.  **Create a `.env` File:**
 
@@ -50,7 +49,6 @@ Before you begin, ensure you have the following installed:
     GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
     ```
     Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual key obtained from Google AI Studio.
-    **Never commit your `.env` file to Git! It's already included in the `.gitignore` for security.**
 
 3.  **Build and Run with Docker Compose:**
 
