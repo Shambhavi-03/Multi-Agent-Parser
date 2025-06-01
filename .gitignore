@@ -5,3 +5,7 @@
 __pycache__/
 *.pyc
 *.pyd
+
+# add venvironment-specific files
+# Virtual environment directories
+venv/
