@@ -27,6 +27,8 @@ Before you begin, ensure you have the following installed:
 * **Docker Desktop** (for Windows/macOS) or **Docker Engine & Compose** (for Linux): Essential for running the containerized services.
     * [Install Docker Desktop](https://www.docker.com/products/docker-desktop)
 
+### 📸 Screenshots
+
 ### ⚙️ Setup Instructions
 
 1.  **Clone the Repository:**
@@ -110,6 +112,9 @@ We welcome contributions to this project! If you have suggestions for improvemen
     
 *   Submit a pull request.
     
+## ▶️ Watch the Demo Video
+
+See the AI Multi-Format Classifier in action! [Watch the Full Demo Here](LINK_TO_YOUR_YOUTUBE_OR_VIMEO_VIDEO)
 
 ### 📄 License
 
