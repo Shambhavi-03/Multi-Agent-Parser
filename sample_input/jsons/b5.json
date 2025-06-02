@@ -1,0 +1,10 @@
+{
+  "transaction_id": "TXN-2005",
+  "date": "2025-05-26",
+  "account_id": "ACCT-005",
+  "amount": 350,
+  "location": "Dallas",
+  "risk_score": 40,
+  "risk_level": "Medium",
+  "flags": ["Frequent Small Transactions"]
+}

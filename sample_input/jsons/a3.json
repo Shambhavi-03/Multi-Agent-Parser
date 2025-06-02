@@ -1,0 +1,16 @@
+{
+  "invoice_id": "INV-1003",
+  "date": "2025-05-27",
+  "customer": {
+    "name": "Carol Lee",
+    "address": "789 Pine Road, Gotham"
+  },
+  "items": [
+    {"description": "Desk Chair", "quantity": 2, "unit_price": 150},
+    {"description": "Desk Lamp", "quantity": 2, "unit_price": 40}
+  ],
+  "subtotal": 380,
+  "tax": 30.4,
+  "total": 410.4,
+  "status": "Paid"
+}

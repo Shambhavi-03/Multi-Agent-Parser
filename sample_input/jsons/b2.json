@@ -1,0 +1,10 @@
+{
+  "transaction_id": "TXN-2001",
+  "date": "2025-05-30",
+  "account_id": "ACCT-001",
+  "amount": 5000,
+  "location": "New York",
+  "risk_score": 87,
+  "risk_level": "High",
+  "flags": ["Unusual Location", "Large Amount"]
+}

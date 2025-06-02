@@ -1,0 +1,15 @@
+{
+  "invoice_id": "INV-1004",
+  "date": "2025-05-25",
+  "customer": {
+    "name": "David Kim",
+    "address": "321 Birch Lane, Star City"
+  },
+  "items": [
+    {"description": "Monitor", "quantity": 1, "unit_price": 250}
+  ],
+  "subtotal": 250,
+  "tax": 20,
+  "total": 270,
+  "status": "Overdue"
+}

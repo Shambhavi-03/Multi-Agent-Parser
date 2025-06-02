@@ -1,0 +1,16 @@
+{
+  "invoice_id": "INV-1001",
+  "date": "2025-05-30",
+  "customer": {
+    "name": "Alice Johnson",
+    "address": "123 Maple Street, Springfield"
+  },
+  "items": [
+    {"description": "Laptop", "quantity": 1, "unit_price": 1200},
+    {"description": "Mouse", "quantity": 2, "unit_price": 25}
+  ],
+  "subtotal": 1250,
+  "tax": 100,
+  "total": 1350,
+  "status": "Paid"
+}

@@ -1,0 +1,16 @@
+{
+  "invoice_id": "INV-1005",
+  "date": "2025-05-24",
+  "customer": {
+    "name": "Eve Martinez",
+    "address": "654 Cedar Blvd, Central City"
+  },
+  "items": [
+    {"description": "Keyboard", "quantity": 3, "unit_price": 45},
+    {"description": "USB Cable", "quantity": 5, "unit_price": 10}
+  ],
+  "subtotal": 185,
+  "tax": 14.8,
+  "total": 199.8,
+  "status": "Paid"
+}

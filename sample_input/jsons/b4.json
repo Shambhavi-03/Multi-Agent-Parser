@@ -1,0 +1,10 @@
+{
+  "transaction_id": "TXN-2004",
+  "date": "2025-05-27",
+  "account_id": "ACCT-004",
+  "amount": 8000,
+  "location": "Miami",
+  "risk_score": 92,
+  "risk_level": "High",
+  "flags": ["New Device", "Unusual Time"]
+}

@@ -1,0 +1,15 @@
+{
+  "invoice_id": "INV-1002",
+  "date": "2025-05-28",
+  "customer": {
+    "name": "Bob Smith",
+    "address": "456 Oak Avenue, Metropolis"
+  },
+  "items": [
+    {"description": "Printer", "quantity": 1, "unit_price": 300}
+  ],
+  "subtotal": 300,
+  "tax": 24,
+  "total": 324,
+  "status": "Unpaid"
+}

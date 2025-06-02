@@ -1,0 +1,12 @@
+{
+  "transaction_id": "TXN-2003",
+  "date": "2025-05-28",
+  "account_id": "ACCT-003",
+  "amount": 2000,
+  "location": "Los Angeles",
+  "risk_score": 65,
+  "risk_level": "Medium",
+  "flags": ["Multiple Transactions"],
+  "alert_id": "FRD-ALRT-987",
+  "event_type": "suspicious_transfer"
+}
