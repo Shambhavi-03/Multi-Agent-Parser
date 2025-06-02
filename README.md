@@ -60,8 +60,7 @@ cd Multi-Agent-Parser
 #### 2.  Create a `.env` File:
 
 This project uses environment variables for sensitive information, particularly your LLM API key.
-
-    Add your Gemini API Key:
+Add your Gemini API Key:
 
    On Linux/macOS (Bash/Zsh):
    ```bash
