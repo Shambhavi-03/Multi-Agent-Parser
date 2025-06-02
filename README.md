@@ -14,90 +14,103 @@ The AI Multi-Format Classifier is a robust application designed to automatically
 * **User-Friendly Interface:** A Streamlit web application provides a simple way to upload files or enter text and view results.
 * **Containerized Deployment:** Uses Docker Compose for isolated and reproducible development and deployment environments.
 
+## 📸 Screenshots
+
 ## 🚀 Getting Started
 
-Follow these steps to get the AI Multi-Format Classifier up and running on your local machine.
+Follow these steps to get the **AI Multi-Format Classifier** up and running on your local machine.
 
-### Prerequisites
+---
 
-Before you begin, ensure you have the following installed:
+### ✅ Prerequisites
 
-* **Git:** For cloning the repository.
-    * [Download Git](https://git-scm.com/downloads)
-* **Docker Desktop** (for Windows/macOS) or **Docker Engine & Compose** (for Linux): Essential for running the containerized services.
-    * [Install Docker Desktop](https://www.docker.com/products/docker-desktop)
+Ensure the following tools are installed:
 
-### 📸 Screenshots
+- **Git**: Used to clone the repository  
+  👉 [Download Git](https://git-scm.com/downloads)
+
+- **Docker**: Required to run containerized services  
+  👉 [Install Docker Desktop (Windows/macOS)](https://www.docker.com/products/docker-desktop)  
+  👉 [Install Docker Engine (Linux)](https://docs.docker.com/engine/install/)  
+  👉 [Install Docker Compose (Linux)](https://docs.docker.com/compose/install/)
+
+- **Gemini API Key**: Required to access the LLM from Google.
+
+#### 🔑 How to Get Your Gemini API Key
+
+1. Go to [Google AI Studio](https://makersuite.google.com/app)
+2. Sign in with your Google account.
+3. Navigate to the **API Keys** section.
+4. Click **Create API Key**.
+5. Copy the generated API key — you’ll need this in the next step.
+
+---
 
 ### ⚙️ Setup Instructions
 
-1.  **Clone the Repository:**
+#### 1. Clone the Repository
 
-    Open your terminal or command prompt and clone the project:
+Open your terminal and run:
 
-    ```bash
-    git clone https://github.com/Shambhavi-03/Multi-Agent-Parser.git
-    cd Multi-Agent-Parser
-    ```
+```bash
+git clone https://github.com/Shambhavi-03/Multi-Agent-Parser.git
+cd Multi-Agent-Parser
+```
 
-2.  **Create a `.env` File:**
+#### 2.  Create a `.env` File:
 
-    This project uses environment variables for sensitive information, particularly your LLM API key. Create a file named `.env` in the **root directory of your project** (the same directory as `docker-compose.yml`).
+This project uses environment variables for sensitive information, particularly your LLM API key.
 
     Add your Gemini API Key:
 
-     * **On Linux/macOS (Bash/Zsh):**
-        ```bash
-        export GEMINI_API_KEY="your_actual_gemini_api_key"
-        ```
-    * **On Windows (Command Prompt):**
-        ```cmd
-        set GEMINI_API_KEY="your_actual_gemini_api_key"
-        ```
-    * **On Windows (PowerShell):**
-        ```powershell
-        $env:GEMINI_API_KEY="your_actual_gemini_api_key"
-        ```
-    Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual key obtained from Google AI Studio.
+   On Linux/macOS (Bash/Zsh):
+   ```bash
+      export GEMINI_API_KEY="your_actual_gemini_api_key"
+   ```
+   On Windows (Command Prompt):
+   ```cmd
+      set GEMINI_API_KEY="your_actual_gemini_api_key"
+   ```
+   On Windows (PowerShell):
+   ```powershell
+      $env:GEMINI_API_KEY="your_actual_gemini_api_key"
+   ```
+   Or you can create a `.env` file in the root of the project (same directory as `docker-compose.yml`) and add:
 
-3.  **Build and Run with Docker Compose:**
+   ```ini
+      GEMINI_API_KEY="your_actual_gemini_api_key"
+   ```
+      
+Replace `"YOUR_GEMINI_API_KEY_HERE"` with your actual key obtained from Google AI Studio.
 
-    From the root directory of your project (where `docker-compose.yml` is located), execute the following command:
+#### 3. Build and Run with Docker Compose
 
-    ```bash
+From the project root, run the following command:
+
+```bash
     docker-compose up --build -d
-    ```
-    * `docker-compose up`: Starts all services defined in `docker-compose.yml`.
-    * `--build`: Forces Docker to rebuild the images for `fastapi_app` and `streamlit_app`. This is crucial when you make code changes.
-    * `-d`: Runs the containers in detached mode (in the background).
+```
 
-    This command will:
-    * Pull the `redis` Docker image.
-    * Build the `fastapi_app` Docker image using `Dockerfile.fastapi`.
-    * Build the `streamlit_app` Docker image using `Dockerfile.streamlit`.
-    * Create a Docker network for the services to communicate.
-    * Start Redis, then FastAPI, then Streamlit (respecting `depends_on`).
+### 🌐 Access the Applications
 
-4.  **Access the Applications:**
+Once the containers are running (this might take 1--2 minutes initially):
 
-    Once the containers are running (it might take a minute or two for the first build), you can access the applications:
+-   **Streamlit Frontend (User Interface)**\
+    👉 Open <http://localhost:8501> in your browser.
 
-    * **Streamlit Frontend (User Interface):**
-        Open your web browser and navigate to:
-        `http://localhost:8501`
+-   **FastAPI Documentation (Swagger UI)**\
+    👉 Open <http://localhost:8000/docs>
 
-    * **FastAPI Documentation (Swagger UI):**
-        Open your web browser and navigate to:
-        `http://localhost:8000/docs`
+-   **FastAPI Root Endpoint (POST Classifier API)**\
+    You can POST input directly to: `http://localhost:8000/`
 
-    * **FastAPI Backend Root (API Endpoint):**
-        The main classification endpoint is now at the root path (`/`) and expects a `POST` request. You can test this via the Streamlit UI, the Swagger UI (`/docs`), or a tool like `curl` or Postman.
-        Example `curl` command for text input:
-        ```bash
+You can test this via the Streamlit UI, the Swagger UI (`/docs`), or a tool like `curl` or Postman.
+Example `curl` command for text input:
+   ```bash
         curl -X POST "http://localhost:8000/" \
              -H "Content-Type: application/x-www-form-urlencoded" \
              -d "text_input=This is a customer inquiry about a refund."
-        ```
+   ```
 
 ### 🛑 Stopping the Applications
 
@@ -112,7 +125,7 @@ To stop and remove containers, associated Docker images, and all volumes (for a 
 docker-compose down --volumes --rmi all
 ```
 
-### 🤝 Contributing
+## 🤝 Contributing
 
 We welcome contributions to this project! If you have suggestions for improvements, new features, or find any bugs, please feel free to:
 
@@ -124,6 +137,6 @@ We welcome contributions to this project! If you have suggestions for improvemen
 
 See the AI Multi-Format Classifier in action! [Watch the Full Demo Here](LINK_TO_YOUR_YOUTUBE_OR_VIMEO_VIDEO)
 
-### 📄 License
+## 📄 License
 
 This project is licensed under the MIT License. You can find the full license text in the LICENSE file in the repository.
