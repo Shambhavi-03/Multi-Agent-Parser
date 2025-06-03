@@ -14,7 +14,20 @@ The AI Multi-Format Classifier is a robust application designed to automatically
 * **User-Friendly Interface:** A Streamlit web application provides a simple way to upload files or enter text and view results.
 * **Containerized Deployment:** Uses Docker Compose for isolated and reproducible development and deployment environments.
 
-## 📸 Screenshots
+## 📸 Screenshots & Diagrams
+
+### System Architecture
+
+![System Architecture](./assets/architecture.png)
+
+---
+
+### Streamlit Frontend UI
+
+![Streamlit UI](./screenshots/email.png)
+
+---
+
 
 ## 🚀 Getting Started
 
