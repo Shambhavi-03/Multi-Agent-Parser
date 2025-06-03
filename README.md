@@ -134,7 +134,7 @@ We welcome contributions to this project! If you have suggestions for improvemen
     
 ## ▶️ Watch the Demo Video
 
-See the AI Multi-Format Classifier in action! [Watch the Full Demo Here]([LINK_TO_YOUR_YOUTUBE_OR_VIMEO_VIDEO](https://drive.google.com/file/d/1hdE_SBvMwVbwPJs5pwRMjjrFW1ohay5S/view?usp=sharing))
+See the AI Multi-Format Classifier in action! [Watch the Full Demo Here](https://drive.google.com/file/d/1hdE_SBvMwVbwPJs5pwRMjjrFW1ohay5S/view?usp=sharing)
 
 ## 📄 License
 
